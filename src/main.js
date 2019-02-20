@@ -3,36 +3,22 @@ const FILTERS = [`All`, `Overdue`, `Today`, `Favorites`, `Repeating`, `Tags`, `A
 
 const getRandomValue = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-const renderFilter = (filterName, taskCount) => {
-  const filterElement = document.createElement(`div`);
-  filterElement.innerHTML = `
-  <input
-    type="radio"
-    id="filter__${filterName}"
-    class="filter__input visually-hidden"
-    name="filter"
-    checked
-  />
-  <label for="filter__${filterName}" class="filter__label">
-    ${filterName} <span class="filter__${filterName}-count">${taskCount}</span></label
-  >
-  `;
-  return filterElement;
-};
+const renderFilter = (filterName, taskCount) => `
+    <input
+      type="radio"
+      id="filter__${filterName}"
+      class="filter__input visually-hidden"
+      name="filter"
+      checked
+    />
+    <label for="filter__${filterName}" class="filter__label">
+      ${filterName} <span class="filter__${filterName}-count">${taskCount}</span></label>
+`;
 
+const getFilterList = (data) => data.map((it) => renderFilter(it, getRandomValue(0, 30))).join(``);
 
-const filterListElement = document.querySelector(`.main__filter`);
-const putFilter = (data) => {
-  const fragment = document.createDocumentFragment();
-  filterListElement.innerHTML = ``;
-  data.forEach((it) => {
-    let taskCount = getRandomValue(0, 30);
-    fragment.appendChild(renderFilter(it, taskCount));
-  });
-  filterListElement.appendChild(fragment);
-};
-
-putFilter(FILTERS);
+let filterListElement = document.querySelector(`.main__filter`);
+filterListElement.innerHTML = getFilterList(FILTERS);
 
 
 const renderCard = () => {
