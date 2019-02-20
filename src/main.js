@@ -1,4 +1,4 @@
-`use strict`;
+'use strict';
 const FILTERS = [`All`, `Overdue`, `Today`, `Favorites`, `Repeating`, `Tags`, `Archive`];
 
 const getRandomValue = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
@@ -340,7 +340,7 @@ const taskListElement = document.querySelector(`.board__tasks`);
 const putCard = (cardsCount) => {
   const fragment = document.createDocumentFragment();
   taskListElement.innerHTML = ``;
-  for(let i = 0; i < cardsCount; i++) {
+  for (let i = 0; i < cardsCount; i++) {
     fragment.appendChild(renderCard());
   }
   taskListElement.appendChild(fragment);
@@ -349,10 +349,10 @@ const putCard = (cardsCount) => {
 putCard(START_CARDS_COUNT);
 
 const filterClickHandler = function (evt) {
-  if(evt.target.classList.contains('filter__label')) {
+  if (evt.target.classList.contains(`filter__label`)) {
     taskListElement.innerHTML = ``;
-    putCard(getRandomValue(1,10));
+    putCard(getRandomValue(1, 10));
   }
 };
 
-filterListElement.addEventListener('click', filterClickHandler);
+filterListElement.addEventListener(`click`, filterClickHandler);
