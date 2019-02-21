@@ -1,5 +1,6 @@
 'use strict';
 const FILTERS = [`All`, `Overdue`, `Today`, `Favorites`, `Repeating`, `Tags`, `Archive`];
+const START_CARDS_COUNT = 7;
 
 const getRandomValue = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
@@ -15,10 +16,10 @@ const renderFilter = (filterName, taskCount) => `
       ${filterName} <span class="filter__${filterName}-count">${taskCount}</span></label>
 `;
 
-const getFilterList = (data) => data.map((it) => renderFilter(it, getRandomValue(0, 30))).join(``);
+const getFiltersHtml = (filtersData) => filtersData.map((it) => renderFilter(it, getRandomValue(0, 30))).join(``);
 
 let filterListElement = document.querySelector(`.main__filter`);
-filterListElement.innerHTML = getFilterList(FILTERS);
+filterListElement.innerHTML = getFiltersHtml(FILTERS);
 
 
 const renderCard = () => {
@@ -321,7 +322,6 @@ const renderCard = () => {
   return cardElement;
 };
 
-const START_CARDS_COUNT = 7;
 const taskListElement = document.querySelector(`.board__tasks`);
 const putCard = (cardsCount) => {
   const fragment = document.createDocumentFragment();
