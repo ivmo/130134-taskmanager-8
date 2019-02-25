@@ -1,7 +1,5 @@
-export default () => {
-  const cardElement = document.createElement(`article`);
-  cardElement.classList.add(`card`, `card--yellow`);
-  cardElement.innerHTML = `
+export default () => `
+<article class="card card--blue">
   <form class="card__form" method="get">
     <div class="card__inner">
       <div class="card__control">
@@ -31,9 +29,7 @@ export default () => {
             class="card__text"
             placeholder="Start typing your text here..."
             name="text"
-          >
-           Here is a card with filled data</textarea
-          >
+          ></textarea>
         </label>
       </div>
 
@@ -41,17 +37,16 @@ export default () => {
         <div class="card__details">
           <div class="card__dates">
             <button class="card__date-deadline-toggle" type="button">
-              date: <span class="card__date-status">yes</span>
+              date: <span class="card__date-status">no</span>
             </button>
 
-            <fieldset class="card__date-deadline">
+            <fieldset class="card__date-deadline" disabled>
               <label class="card__input-deadline-wrap">
                 <input
                   class="card__date"
                   type="text"
                   placeholder="23 September"
                   name="date"
-                  value="23 September"
                 />
               </label>
               <label class="card__input-deadline-wrap">
@@ -60,67 +55,66 @@ export default () => {
                   type="text"
                   placeholder="11:15 PM"
                   name="time"
-                  value="11:15 PM"
                 />
               </label>
             </fieldset>
 
             <button class="card__repeat-toggle" type="button">
-              repeat:<span class="card__repeat-status">yes</span>
+              repeat:<span class="card__repeat-status">no</span>
             </button>
 
-            <fieldset class="card__repeat-days">
+            <fieldset class="card__repeat-days" disabled>
               <div class="card__repeat-days-inner">
                 <input
                   class="visually-hidden card__repeat-day-input"
                   type="checkbox"
-                  id="repeat-mo-4"
+                  id="repeat-mo-5"
                   name="repeat"
                   value="mo"
                 />
-                <label class="card__repeat-day" for="repeat-mo-4"
+                <label class="card__repeat-day" for="repeat-mo-5"
                   >mo</label
                 >
                 <input
                   class="visually-hidden card__repeat-day-input"
                   type="checkbox"
-                  id="repeat-tu-4"
+                  id="repeat-tu-5"
                   name="repeat"
                   value="tu"
                   checked
                 />
-                <label class="card__repeat-day" for="repeat-tu-4"
+                <label class="card__repeat-day" for="repeat-tu-5"
                   >tu</label
                 >
                 <input
                   class="visually-hidden card__repeat-day-input"
                   type="checkbox"
-                  id="repeat-we-4"
+                  id="repeat-we-5"
                   name="repeat"
                   value="we"
                 />
-                <label class="card__repeat-day" for="repeat-we-4"
+                <label class="card__repeat-day" for="repeat-we-5"
                   >we</label
                 >
                 <input
                   class="visually-hidden card__repeat-day-input"
                   type="checkbox"
-                  id="repeat-th-4"
+                  id="repeat-th-5"
                   name="repeat"
                   value="th"
                 />
-                <label class="card__repeat-day" for="repeat-th-4"
+                <label class="card__repeat-day" for="repeat-th-5"
                   >th</label
                 >
                 <input
                   class="visually-hidden card__repeat-day-input"
                   type="checkbox"
-                  id="repeat-fr-4"
+                  id="repeat-fr-5"
                   name="repeat"
                   value="fr"
                   checked
                 />
-                <label class="card__repeat-day" for="repeat-fr-4"
+                <label class="card__repeat-day" for="repeat-fr-5"
                   >fr</label
                 >
                 <input
@@ -128,20 +122,20 @@ export default () => {
                   type="checkbox"
                   name="repeat"
                   value="sa"
-                  id="repeat-sa-4"
+                  id="repeat-sa-5"
                 />
-                <label class="card__repeat-day" for="repeat-sa-4"
+                <label class="card__repeat-day" for="repeat-sa-5"
                   >sa</label
                 >
                 <input
                   class="visually-hidden card__repeat-day-input"
                   type="checkbox"
-                  id="repeat-su-4"
+                  id="repeat-su-5"
                   name="repeat"
                   value="su"
                   checked
                 />
-                <label class="card__repeat-day" for="repeat-su-4"
+                <label class="card__repeat-day" for="repeat-su-5"
                   >su</label
                 >
               </div>
@@ -207,14 +201,14 @@ export default () => {
           </div>
         </div>
 
-        <label class="card__img-wrap">
+        <label class="card__img-wrap card__img-wrap--empty">
           <input
             type="file"
             class="card__img-input visually-hidden"
             name="img"
           />
           <img
-            src="img/sample-img.jpg"
+            src="img/add-photo.svg"
             alt="task picture"
             class="card__img"
           />
@@ -225,62 +219,62 @@ export default () => {
           <div class="card__colors-wrap">
             <input
               type="radio"
-              id="color-black-4"
+              id="color-black-5"
               class="card__color-input card__color-input--black visually-hidden"
               name="color"
               value="black"
             />
             <label
-              for="color-black-4"
+              for="color-black-5"
               class="card__color card__color--black"
               >black</label
             >
             <input
               type="radio"
-              id="color-yellow-4"
+              id="color-yellow-5"
               class="card__color-input card__color-input--yellow visually-hidden"
               name="color"
               value="yellow"
-              checked
             />
             <label
-              for="color-yellow-4"
+              for="color-yellow-5"
               class="card__color card__color--yellow"
               >yellow</label
             >
             <input
               type="radio"
-              id="color-blue-4"
+              id="color-blue-5"
               class="card__color-input card__color-input--blue visually-hidden"
               name="color"
               value="blue"
             />
             <label
-              for="color-blue-4"
+              for="color-blue-5"
               class="card__color card__color--blue"
               >blue</label
             >
             <input
               type="radio"
-              id="color-green-4"
+              id="color-green-5"
               class="card__color-input card__color-input--green visually-hidden"
               name="color"
               value="green"
+              checked
             />
             <label
-              for="color-green-4"
+              for="color-green-5"
               class="card__color card__color--green"
               >green</label
             >
             <input
               type="radio"
-              id="color-pink-4"
+              id="color-pink-5"
               class="card__color-input card__color-input--pink visually-hidden"
               name="color"
               value="pink"
             />
             <label
-              for="color-pink-4"
+              for="color-pink-5"
               class="card__color card__color--pink"
               >pink</label
             >
@@ -294,6 +288,5 @@ export default () => {
       </div>
     </div>
   </form>
-  `;
-  return cardElement;
-};
+</article>
+`;
