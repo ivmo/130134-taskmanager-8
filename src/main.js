@@ -10,7 +10,7 @@ const getRandomValue = (max, min = 0) => Math.floor(Math.random() * (max - min))
 
 const getFiltersHtml = (filtersData) => {
   return filtersData.map((it, i) => {
-      return renderFilter(it, getRandomValue(0, 30), i === DEFAULT_ACTIVE_FILTER_INDEX);
+    return renderFilter(it, getRandomValue(0, 30), i === DEFAULT_ACTIVE_FILTER_INDEX);
   }).join(``);
 };
 
