@@ -1,5 +1,7 @@
-export default () => `
-<article class="card card--blue">
+import renderHashtag from './make-hashtag.js';
+
+const renderTask = (taskData) => `
+<article class="card card--${taskData.color} ${taskData.dueDate < Date.now() ? `card--deadline` : ``}">
   <form class="card__form" method="get">
     <div class="card__inner">
       <div class="card__control">
@@ -29,7 +31,7 @@ export default () => `
             class="card__text"
             placeholder="Start typing your text here..."
             name="text"
-          ></textarea>
+          >${taskData.title}</textarea>
         </label>
       </div>
 
@@ -55,6 +57,7 @@ export default () => `
                   type="text"
                   placeholder="11:15 PM"
                   name="time"
+                  value="${taskData.dueDate}"
                 />
               </label>
             </fieldset>
@@ -71,6 +74,7 @@ export default () => `
                   id="repeat-mo-5"
                   name="repeat"
                   value="mo"
+                  ${taskData.repeatingDays.mo ? `checked` : ``}
                 />
                 <label class="card__repeat-day" for="repeat-mo-5"
                   >mo</label
@@ -81,7 +85,7 @@ export default () => `
                   id="repeat-tu-5"
                   name="repeat"
                   value="tu"
-                  checked
+                  ${taskData.repeatingDays.tu ? `checked` : ``}
                 />
                 <label class="card__repeat-day" for="repeat-tu-5"
                   >tu</label
@@ -92,6 +96,7 @@ export default () => `
                   id="repeat-we-5"
                   name="repeat"
                   value="we"
+                  ${taskData.repeatingDays.we ? `checked` : ``}
                 />
                 <label class="card__repeat-day" for="repeat-we-5"
                   >we</label
@@ -102,6 +107,7 @@ export default () => `
                   id="repeat-th-5"
                   name="repeat"
                   value="th"
+                  ${taskData.repeatingDays.th ? `checked` : ``}
                 />
                 <label class="card__repeat-day" for="repeat-th-5"
                   >th</label
@@ -112,7 +118,7 @@ export default () => `
                   id="repeat-fr-5"
                   name="repeat"
                   value="fr"
-                  checked
+                  ${taskData.repeatingDays.fr ? `checked` : ``}
                 />
                 <label class="card__repeat-day" for="repeat-fr-5"
                   >fr</label
@@ -123,6 +129,7 @@ export default () => `
                   name="repeat"
                   value="sa"
                   id="repeat-sa-5"
+                  ${taskData.repeatingDays.sa ? `checked` : ``}
                 />
                 <label class="card__repeat-day" for="repeat-sa-5"
                   >sa</label
@@ -133,7 +140,7 @@ export default () => `
                   id="repeat-su-5"
                   name="repeat"
                   value="su"
-                  checked
+                  ${taskData.repeatingDays.su ? `checked` : ``}
                 />
                 <label class="card__repeat-day" for="repeat-su-5"
                   >su</label
@@ -144,50 +151,7 @@ export default () => `
 
           <div class="card__hashtag">
             <div class="card__hashtag-list">
-              <span class="card__hashtag-inner">
-                <input
-                  type="hidden"
-                  name="hashtag"
-                  value="repeat"
-                  class="card__hashtag-hidden-input"
-                />
-                <button type="button" class="card__hashtag-name">
-                  #repeat
-                </button>
-                <button type="button" class="card__hashtag-delete">
-                  delete
-                </button>
-              </span>
-
-              <span class="card__hashtag-inner">
-                <input
-                  type="hidden"
-                  name="hashtag"
-                  value="repeat"
-                  class="card__hashtag-hidden-input"
-                />
-                <button type="button" class="card__hashtag-name">
-                  #cinema
-                </button>
-                <button type="button" class="card__hashtag-delete">
-                  delete
-                </button>
-              </span>
-
-              <span class="card__hashtag-inner">
-                <input
-                  type="hidden"
-                  name="hashtag"
-                  value="repeat"
-                  class="card__hashtag-hidden-input"
-                />
-                <button type="button" class="card__hashtag-name">
-                  #entertaiment
-                </button>
-                <button type="button" class="card__hashtag-delete">
-                  delete
-                </button>
-              </span>
+              ${renderHashtag(taskData.tags)}
             </div>
 
             <label>
@@ -208,7 +172,7 @@ export default () => `
             name="img"
           />
           <img
-            src="img/add-photo.svg"
+            src="${taskData.picture}"
             alt="task picture"
             class="card__img"
           />
@@ -290,3 +254,5 @@ export default () => `
   </form>
 </article>
 `;
+
+export default renderTask;
