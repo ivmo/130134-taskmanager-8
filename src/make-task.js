@@ -1,7 +1,12 @@
 import renderHashtag from './make-hashtag.js';
+import getDaysHtml from './make-day.js';
+
+const getRandomArrayItem = (array) => array[Math.floor(Math.random() * array.length)];
+const getRandomDate = (taskDate) => taskDate + 1 + Math.floor(Math.random() * 7) * 24 * 60 * 60 * 1000;
+const getConvertedDate = (dataTask) => new Date(getRandomDate(dataTask));
 
 const renderTask = (taskData) => `
-<article class="card card--${taskData.color} ${taskData.dueDate < Date.now() ? `card--deadline` : ``}">
+<article class="card card--${getRandomArrayItem(taskData.color)} ${getRandomDate(taskData.dueDate) < Date.now() ? `card--deadline` : ``}">
   <form class="card__form" method="get">
     <div class="card__inner">
       <div class="card__control">
@@ -31,7 +36,7 @@ const renderTask = (taskData) => `
             class="card__text"
             placeholder="Start typing your text here..."
             name="text"
-          >${taskData.title}</textarea>
+          >${getRandomArrayItem(taskData.title)}</textarea>
         </label>
       </div>
 
@@ -49,6 +54,7 @@ const renderTask = (taskData) => `
                   type="text"
                   placeholder="23 September"
                   name="date"
+                  value="${getConvertedDate(taskData.dueDate).getDate()}"
                 />
               </label>
               <label class="card__input-deadline-wrap">
@@ -57,7 +63,7 @@ const renderTask = (taskData) => `
                   type="text"
                   placeholder="11:15 PM"
                   name="time"
-                  value="${taskData.dueDate}"
+                  value="${getConvertedDate(taskData.dueDate).getHours()}:${getConvertedDate(taskData.dueDate).getMinutes()}"
                 />
               </label>
             </fieldset>
@@ -68,83 +74,7 @@ const renderTask = (taskData) => `
 
             <fieldset class="card__repeat-days" disabled>
               <div class="card__repeat-days-inner">
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-mo-5"
-                  name="repeat"
-                  value="mo"
-                  ${taskData.repeatingDays.mo ? `checked` : ``}
-                />
-                <label class="card__repeat-day" for="repeat-mo-5"
-                  >mo</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-tu-5"
-                  name="repeat"
-                  value="tu"
-                  ${taskData.repeatingDays.tu ? `checked` : ``}
-                />
-                <label class="card__repeat-day" for="repeat-tu-5"
-                  >tu</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-we-5"
-                  name="repeat"
-                  value="we"
-                  ${taskData.repeatingDays.we ? `checked` : ``}
-                />
-                <label class="card__repeat-day" for="repeat-we-5"
-                  >we</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-th-5"
-                  name="repeat"
-                  value="th"
-                  ${taskData.repeatingDays.th ? `checked` : ``}
-                />
-                <label class="card__repeat-day" for="repeat-th-5"
-                  >th</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-fr-5"
-                  name="repeat"
-                  value="fr"
-                  ${taskData.repeatingDays.fr ? `checked` : ``}
-                />
-                <label class="card__repeat-day" for="repeat-fr-5"
-                  >fr</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  name="repeat"
-                  value="sa"
-                  id="repeat-sa-5"
-                  ${taskData.repeatingDays.sa ? `checked` : ``}
-                />
-                <label class="card__repeat-day" for="repeat-sa-5"
-                  >sa</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-su-5"
-                  name="repeat"
-                  value="su"
-                  ${taskData.repeatingDays.su ? `checked` : ``}
-                />
-                <label class="card__repeat-day" for="repeat-su-5"
-                  >su</label
-                >
+                ${getDaysHtml(taskData.repeatingDays)}
               </div>
             </fieldset>
           </div>

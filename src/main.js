@@ -17,19 +17,29 @@ const getFiltersHtml = (filtersData) => {
 const filterListElement = document.querySelector(`.main__filter`);
 filterListElement.innerHTML = getFiltersHtml(FILTERS);
 
-const makeTask = () => renderTask(taskData);
-
-const taskListElement = document.querySelector(`.board__tasks`);
-const putCard = (getTask, tasksCount) => {
-  const taskItems = new Array(tasksCount).fill().map(getTask);
-  taskListElement.innerHTML = taskItems.join(``);
+let tasksDataArray;
+const getArrayTasks = (taskItem, tasksCount) => {
+  tasksDataArray = new Array(tasksCount).fill(taskItem);
+  return tasksDataArray;
 };
 
-putCard(makeTask, START_CARDS_COUNT);
+getArrayTasks(taskData, START_CARDS_COUNT);
+
+
+const taskListElement = document.querySelector(`.board__tasks`);
+
+const makeTasks = (arrayTaskData) => {
+  const tasksArray = arrayTaskData.map((it) => renderTask(it));
+  taskListElement.innerHTML = tasksArray.join(``);
+};
+
+makeTasks(tasksDataArray);
+
 
 const filterClickHandler = function (evt) {
   if (evt.target.classList.contains(`filter__label`)) {
-    putCard(makeTask, getRandomValue(1, 10));
+    getArrayTasks(taskData, getRandomValue(1, 10));
+    makeTasks(tasksDataArray);
   }
 };
 
