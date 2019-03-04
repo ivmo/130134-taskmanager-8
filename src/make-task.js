@@ -1,5 +1,12 @@
-export default () => `
-<article class="card card--blue">
+import renderHashtag from './make-hashtag.js';
+import getDaysHtml from './make-day.js';
+
+const getRandomArrayItem = (array) => array[Math.floor(Math.random() * array.length)];
+const getRandomDate = (taskDate) => taskDate + 1 + Math.floor(Math.random() * 7) * 24 * 60 * 60 * 1000;
+const getConvertedDate = (dataTask) => new Date(getRandomDate(dataTask));
+
+const renderTask = (taskData) => `
+<article class="card card--${getRandomArrayItem(taskData.color)} ${getRandomDate(taskData.dueDate) < Date.now() ? `card--deadline` : ``}">
   <form class="card__form" method="get">
     <div class="card__inner">
       <div class="card__control">
@@ -29,7 +36,7 @@ export default () => `
             class="card__text"
             placeholder="Start typing your text here..."
             name="text"
-          ></textarea>
+          >${getRandomArrayItem(taskData.title)}</textarea>
         </label>
       </div>
 
@@ -47,6 +54,7 @@ export default () => `
                   type="text"
                   placeholder="23 September"
                   name="date"
+                  value="${getConvertedDate(taskData.dueDate).getDate()}"
                 />
               </label>
               <label class="card__input-deadline-wrap">
@@ -55,6 +63,7 @@ export default () => `
                   type="text"
                   placeholder="11:15 PM"
                   name="time"
+                  value="${getConvertedDate(taskData.dueDate).getHours()}:${getConvertedDate(taskData.dueDate).getMinutes()}"
                 />
               </label>
             </fieldset>
@@ -65,129 +74,14 @@ export default () => `
 
             <fieldset class="card__repeat-days" disabled>
               <div class="card__repeat-days-inner">
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-mo-5"
-                  name="repeat"
-                  value="mo"
-                />
-                <label class="card__repeat-day" for="repeat-mo-5"
-                  >mo</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-tu-5"
-                  name="repeat"
-                  value="tu"
-                  checked
-                />
-                <label class="card__repeat-day" for="repeat-tu-5"
-                  >tu</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-we-5"
-                  name="repeat"
-                  value="we"
-                />
-                <label class="card__repeat-day" for="repeat-we-5"
-                  >we</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-th-5"
-                  name="repeat"
-                  value="th"
-                />
-                <label class="card__repeat-day" for="repeat-th-5"
-                  >th</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-fr-5"
-                  name="repeat"
-                  value="fr"
-                  checked
-                />
-                <label class="card__repeat-day" for="repeat-fr-5"
-                  >fr</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  name="repeat"
-                  value="sa"
-                  id="repeat-sa-5"
-                />
-                <label class="card__repeat-day" for="repeat-sa-5"
-                  >sa</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-su-5"
-                  name="repeat"
-                  value="su"
-                  checked
-                />
-                <label class="card__repeat-day" for="repeat-su-5"
-                  >su</label
-                >
+                ${getDaysHtml(taskData.repeatingDays)}
               </div>
             </fieldset>
           </div>
 
           <div class="card__hashtag">
             <div class="card__hashtag-list">
-              <span class="card__hashtag-inner">
-                <input
-                  type="hidden"
-                  name="hashtag"
-                  value="repeat"
-                  class="card__hashtag-hidden-input"
-                />
-                <button type="button" class="card__hashtag-name">
-                  #repeat
-                </button>
-                <button type="button" class="card__hashtag-delete">
-                  delete
-                </button>
-              </span>
-
-              <span class="card__hashtag-inner">
-                <input
-                  type="hidden"
-                  name="hashtag"
-                  value="repeat"
-                  class="card__hashtag-hidden-input"
-                />
-                <button type="button" class="card__hashtag-name">
-                  #cinema
-                </button>
-                <button type="button" class="card__hashtag-delete">
-                  delete
-                </button>
-              </span>
-
-              <span class="card__hashtag-inner">
-                <input
-                  type="hidden"
-                  name="hashtag"
-                  value="repeat"
-                  class="card__hashtag-hidden-input"
-                />
-                <button type="button" class="card__hashtag-name">
-                  #entertaiment
-                </button>
-                <button type="button" class="card__hashtag-delete">
-                  delete
-                </button>
-              </span>
+              ${renderHashtag(taskData.tags)}
             </div>
 
             <label>
@@ -208,7 +102,7 @@ export default () => `
             name="img"
           />
           <img
-            src="img/add-photo.svg"
+            src="${taskData.picture}"
             alt="task picture"
             class="card__img"
           />
@@ -290,3 +184,5 @@ export default () => `
   </form>
 </article>
 `;
+
+export default renderTask;
