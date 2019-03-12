@@ -1,6 +1,6 @@
 import taskData from './data.js';
 import renderFilter from './make-filter.js';
-import renderTask from './make-task.js';
+import Task from './make-task.js';
 
 const FILTERS = [`All`, `Overdue`, `Today`, `Favorites`, `Repeating`, `Tags`, `Archive`];
 const START_CARDS_COUNT = 7;
@@ -28,9 +28,15 @@ getArrayTasks(taskData, START_CARDS_COUNT);
 
 const taskListElement = document.querySelector(`.board__tasks`);
 
+
 const makeTasks = (arrayTaskData) => {
-  const tasksArray = arrayTaskData.map((it) => renderTask(it));
-  taskListElement.innerHTML = tasksArray.join(``);
+  arrayTaskData.forEach((it) => {
+    const task = new Task(it);
+    task.render(taskListElement);
+  });
+
+
+  // taskListElement.innerHTML = tasksArray.join(``);
 };
 
 makeTasks(tasksDataArray);
