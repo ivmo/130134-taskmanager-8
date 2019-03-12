@@ -5,6 +5,12 @@ const getRandomArrayItem = (array) => array[Math.floor(Math.random() * array.len
 const getRandomDate = (taskDate) => taskDate + 1 + Math.floor(Math.random() * 7) * 24 * 60 * 60 * 1000;
 const getConvertedDate = (dataTask) => new Date(getRandomDate(dataTask));
 
+const createElement = (template) => {
+  const newElement = document.createElement(`div`);
+  newElement.innerHTML = template;
+  return newElement.firstChild;
+};
+
 class Task {
   constructor(data) {
     this._title = data.title;
@@ -13,6 +19,8 @@ class Task {
     this._picture = data.picture;
     this._repeatingDays = data.repeatingDays;
     this._color = data.color;
+
+    this._element = null;
   }
 
     _isRepeated() {
@@ -202,7 +210,13 @@ class Task {
   }
 
   render(container) {
-    container.innerHTML = this.template;
+    if (this._element) {
+      container.removeChild(this._element);
+      this._element = null;
+    }
+
+  	this._element = createElement(this.template);
+    container.appendChild(this._element);
   }
 
 }

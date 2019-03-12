@@ -30,12 +30,13 @@ const taskListElement = document.querySelector(`.board__tasks`);
 
 
 const makeTasks = (arrayTaskData) => {
-  const tasksArray = arrayTaskData.map((it) => {
+  arrayTaskData.forEach((it) => {
     const task = new Task(it);
-    return task.render(taskListElement);
+    task.render(taskListElement);
   });
-  console.log(tasksArray);
-  taskListElement.innerHTML = tasksArray.join(``);
+
+
+  // taskListElement.innerHTML = tasksArray.join(``);
 };
 
 makeTasks(tasksDataArray);
