@@ -11,7 +11,7 @@ const createElement = (template) => {
   return newElement.firstChild;
 };
 
-class Task {
+class TaskEdit {
   constructor(data) {
     this._title = data.title;
     this._dueDate = data.dueDate;
@@ -21,30 +21,29 @@ class Task {
     this._color = data.color;
 
     this._element = null;
-    this._state = {
-      isEdit: false
-    };
+    this._onSubmit = null;
+  }
+
+  _onSubmitButtonClick(evt) {
+    evt.preventDefault();
+    typeof this._onSubmit === `function` && this._onSubmit();
   }
 
   _isRepeated() {
-    return Object.values(this._repeatingDays).some(it => it === true);
+    return Object.values(this._repeatingDays).some((it) => it === true);
   }
 
-  _onEditButtonClick() {
-    typeof this._onEdit === `function` && this._onEdit();
+  set onSubmit(fn) {
+    this._onSubmit = fn;
   }
 
   get element() {
     return this._element;
   }
 
-  set onEdit(fn) {
-    this._onEdit = fn;
-  }
-
-  get template () {
-      return `
-      <article class="card card--${getRandomArrayItem(this._color)} ${this._isRepeated() ? `card--repeat` : ``} ${getRandomDate(this._dueDate) < Date.now() ? `card--deadline` : ``}">
+  get template() {
+    return `
+      <article class="card card--edit card--${getRandomArrayItem(this._color)} ${this._isRepeated() ? `card--repeat` : ``} ${getRandomDate(this._dueDate) < Date.now() ? `card--deadline` : ``}">
         <form class="card__form" method="get">
           <div class="card__inner">
             <div class="card__control">
@@ -236,16 +235,16 @@ class Task {
   }
 
   bind() {
-      this._element.querySelector(`.card__btn--edit`)
+    this._element.querySelector(`.card-form`)
           .addEventListener(`click`, this._onEditButtonClick.bind(this));
-    }
+  }
 
   unbind() {
-    this._element.querySelector(`.card__btn--edit`)
+    this._element.querySelector(`.card-form`)
         .removeEventListener(`submit`, this._onSubmitButtonClick.bind(this));
   }
 
 }
 
 
-export default Task;
+export default TaskEdit;
