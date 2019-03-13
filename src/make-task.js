@@ -206,7 +206,7 @@ class Task {
           </div>
         </form>
       </article>
-      `
+      `.trim();
   }
 
   render(container) {
