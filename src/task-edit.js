@@ -29,6 +29,10 @@ class TaskEdit {
     typeof this._onSubmit === `function` && this._onSubmit();
   }
 
+  _onEditButtonClick() {
+    typeof this._onEdit === `function` && this._onEdit();
+  }
+
   _isRepeated() {
     return Object.values(this._repeatingDays).some((it) => it === true);
   }
@@ -235,13 +239,11 @@ class TaskEdit {
   }
 
   bind() {
-    this._element.querySelector(`.card-form`)
-          .addEventListener(`click`, this._onEditButtonClick.bind(this));
+    this._element.querySelector(`.card__btn--edit`).addEventListener(`click`, this._onEditButtonClick.bind(this));
   }
 
   unbind() {
-    this._element.querySelector(`.card-form`)
-        .removeEventListener(`submit`, this._onSubmitButtonClick.bind(this));
+    this._element.querySelector(`.card-form`).removeEventListener(`submit`, this._onSubmitButtonClick.bind(this));
   }
 
 }

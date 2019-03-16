@@ -27,43 +27,40 @@ const getArrayTasks = (taskItem, tasksCount) => {
 getArrayTasks(taskData, START_CARDS_COUNT);
 
 
+const tasksContainer = document.querySelector(`.board__tasks`);
 
-const parentTasksContainer = document.querySelector(`.board`);
-let tasksContainer = parentTasksContainer.querySelector(`.board__tasks`);
-let taskComponent;
-let editTaskComponent;
+
+const getTask = (taskDataItem) => {
+  const taskComponent = new Task(taskDataItem);
+  const editTaskComponent = new TaskEdit(taskDataItem);
+
+
+  taskComponent.onEdit = () => {
+    editTaskComponent.render();
+    tasksContainer.replaceChild(editTaskComponent.element, taskComponent.element);
+    taskComponent.unrender();
+  };
+
+  editTaskComponent.onSubmit = () => {
+    taskComponent.render();
+    tasksContainer.replaceChild(taskComponent.element, editTaskComponent.element);
+    editTaskComponent.unrender();
+  };
+
+  return taskComponent.render();
+};
 
 
 const makeTasks = (arrayTaskData) => {
-  const template = document.createElement(`div`);
-  const templateEdit = document.createElement(`div`);
-  template.classList.add(`board__tasks`);
-  templateEdit.classList.add(`board__tasks`);
+  tasksContainer.innerHTML = ``;
+  const fragment = document.createDocumentFragment();
   arrayTaskData.forEach((it) => {
-    taskComponent = new Task(it);
-    template.appendChild(taskComponent.render());
-    editTaskComponent = new TaskEdit(it);
-    templateEdit.appendChild(editTaskComponent.render());
+    fragment.appendChild(getTask(it));
   });
-  parentTasksContainer.replaceChild(template, tasksContainer);
-  tasksContainer = parentTasksContainer.querySelector(`.board__tasks`);
+  tasksContainer.appendChild(fragment);
 };
 
 makeTasks(tasksDataArray);
-
-
-taskComponent.onEdit = () => {
-  editTaskComponent.render();
-  tasksContainer.replaceChild(editTaskComponent.element, taskComponent.element);
-  taskComponent.unrender();
-};
-
-editTaskComponent.onSubmit = () => {
-  taskComponent.render();
-  tasksContainer.replaceChild(taskComponent.element, editTaskComponent.element);
-  editTaskComponent.unrender();
-};
-
 
 
 const filterClickHandler = function (evt) {

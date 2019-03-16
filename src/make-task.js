@@ -24,14 +24,20 @@ class Task {
     this._state = {
       isEdit: false
     };
+    this._onEdit = null;
   }
 
   _isRepeated() {
-    return Object.values(this._repeatingDays).some(it => it === true);
+    return Object.values(this._repeatingDays).some((it) => it === true);
   }
 
   _onEditButtonClick() {
     typeof this._onEdit === `function` && this._onEdit();
+  }
+
+  _onSubmitButtonClick(evt) {
+    evt.preventDefault();
+    typeof this._onSubmit === `function` && this._onSubmit();
   }
 
   get element() {
@@ -42,8 +48,8 @@ class Task {
     this._onEdit = fn;
   }
 
-  get template () {
-      return `
+  get template() {
+    return `
       <article class="card card--${getRandomArrayItem(this._color)} ${this._isRepeated() ? `card--repeat` : ``} ${getRandomDate(this._dueDate) < Date.now() ? `card--deadline` : ``}">
         <form class="card__form" method="get">
           <div class="card__inner">
@@ -226,23 +232,22 @@ class Task {
 
   render() {
     this._element = createElement(this.template);
-    this.bind();
+    this.bindEvents();
     return this._element;
   }
 
   unrender() {
-    this.unbind();
+    this.unbindEvents();
     this._element = null;
   }
 
-  bind() {
-      this._element.querySelector(`.card__btn--edit`)
-          .addEventListener(`click`, this._onEditButtonClick.bind(this));
-    }
+  bindEvents() {
+    // debugger;
+    this._element.querySelector(`.card__btn--edit`).addEventListener(`click`, this._onEditButtonClick.bind(this));
+  }
 
-  unbind() {
-    this._element.querySelector(`.card__btn--edit`)
-        .removeEventListener(`submit`, this._onSubmitButtonClick.bind(this));
+  unbindEvents() {
+    this._element.querySelector(`.card-form`).removeEventListener(`submit`, this._onSubmitButtonClick.bind(this));
   }
 
 }
