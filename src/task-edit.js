@@ -26,12 +26,16 @@ class TaskEdit {
 
   _onSubmitButtonClick(evt) {
     evt.preventDefault();
-    typeof this._onSubmit === `function` && this._onSubmit();
+    if (typeof this._onSubmit === `function`) {
+      this._onSubmit();
+    }
   }
 
-  _onEditButtonClick() {
-    typeof this._onEdit === `function` && this._onEdit();
-  }
+  // _onEditButtonClick() {
+  //   if (typeof this._onEdit === `function`) {
+  //     this._onEdit();
+  //   }
+  // }
 
   _isRepeated() {
     return Object.values(this._repeatingDays).some((it) => it === true);
@@ -229,21 +233,21 @@ class TaskEdit {
 
   render() {
     this._element = createElement(this.template);
-    this.bind();
+    this.bindEvents();
     return this._element;
   }
 
   unrender() {
-    this.unbind();
+    this.unbindEvents();
     this._element = null;
   }
 
-  bind() {
-    this._element.querySelector(`.card__btn--edit`).addEventListener(`click`, this._onEditButtonClick.bind(this));
+  bindEvents() {
+    this._element.querySelector(`.card__form`).addEventListener(`submit`, this._onSubmitButtonClick.bind(this));
   }
 
-  unbind() {
-    this._element.querySelector(`.card-form`).removeEventListener(`submit`, this._onSubmitButtonClick.bind(this));
+  unbindEvents() {
+    this._element.querySelector(`.card__form`).removeEventListener(`submit`, this._onSubmitButtonClick.bind(this));
   }
 
 }

@@ -32,13 +32,19 @@ class Task {
   }
 
   _onEditButtonClick() {
-    typeof this._onEdit === `function` && this._onEdit();
+    if (typeof this._onEdit === `function`) {
+      this._onEdit();
+    }
+    // typeof this._onEdit === `function` && this._onEdit();
   }
 
-  _onSubmitButtonClick(evt) {
-    evt.preventDefault();
-    typeof this._onSubmit === `function` && this._onSubmit();
-  }
+  // _onSubmitButtonClick(evt) {
+  //   evt.preventDefault();
+  //   if (typeof this._onSubmit === `function`) {
+  //     this._onSubmit();
+  //   }
+  //   // typeof this._onSubmit === `function` && this._onSubmit();
+  // }
 
   get element() {
     return this._element;
@@ -242,12 +248,11 @@ class Task {
   }
 
   bindEvents() {
-    // debugger;
     this._element.querySelector(`.card__btn--edit`).addEventListener(`click`, this._onEditButtonClick.bind(this));
   }
 
   unbindEvents() {
-    this._element.querySelector(`.card-form`).removeEventListener(`submit`, this._onSubmitButtonClick.bind(this));
+    this._element.querySelector(`.card__btn--edit`).removeEventListener(`click`, this._onEditButtonClick.bind(this));
   }
 
 }
