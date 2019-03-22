@@ -1,6 +1,7 @@
 import taskData from './data.js';
 import renderFilter from './make-filter.js';
 import Task from './make-task.js';
+import TaskEdit from './task-edit.js';
 
 const FILTERS = [`All`, `Overdue`, `Today`, `Favorites`, `Repeating`, `Tags`, `Archive`];
 const START_CARDS_COUNT = 7;
@@ -26,17 +27,37 @@ const getArrayTasks = (taskItem, tasksCount) => {
 getArrayTasks(taskData, START_CARDS_COUNT);
 
 
-const taskListElement = document.querySelector(`.board__tasks`);
+const tasksContainer = document.querySelector(`.board__tasks`);
+
+
+const getTask = (taskDataItem) => {
+  const taskComponent = new Task(taskDataItem);
+  const editTaskComponent = new TaskEdit(taskDataItem);
+
+
+  taskComponent.onEdit = () => {
+    editTaskComponent.render();
+    tasksContainer.replaceChild(editTaskComponent.element, taskComponent.element);
+    taskComponent.unrender();
+  };
+
+  editTaskComponent.onSubmit = () => {
+    taskComponent.render();
+    tasksContainer.replaceChild(taskComponent.element, editTaskComponent.element);
+    editTaskComponent.unrender();
+  };
+
+  return taskComponent.render();
+};
 
 
 const makeTasks = (arrayTaskData) => {
+  tasksContainer.innerHTML = ``;
+  const fragment = document.createDocumentFragment();
   arrayTaskData.forEach((it) => {
-    const task = new Task(it);
-    task.render(taskListElement);
+    fragment.appendChild(getTask(it));
   });
-
-
-  // taskListElement.innerHTML = tasksArray.join(``);
+  tasksContainer.appendChild(fragment);
 };
 
 makeTasks(tasksDataArray);

@@ -11,7 +11,7 @@ const createElement = (template) => {
   return newElement.firstChild;
 };
 
-class Task {
+class TaskEdit {
   constructor(data) {
     this._title = data.title;
     this._dueDate = data.dueDate;
@@ -21,42 +21,37 @@ class Task {
     this._color = data.color;
 
     this._element = null;
-    this._state = {
-      isEdit: false
-    };
-    this._onEdit = null;
+    this._onSubmit = null;
   }
+
+  _onSubmitButtonClick(evt) {
+    evt.preventDefault();
+    if (typeof this._onSubmit === `function`) {
+      this._onSubmit();
+    }
+  }
+
+  // _onEditButtonClick() {
+  //   if (typeof this._onEdit === `function`) {
+  //     this._onEdit();
+  //   }
+  // }
 
   _isRepeated() {
     return Object.values(this._repeatingDays).some((it) => it === true);
   }
 
-  _onEditButtonClick() {
-    if (typeof this._onEdit === `function`) {
-      this._onEdit();
-    }
-    // typeof this._onEdit === `function` && this._onEdit();
+  set onSubmit(fn) {
+    this._onSubmit = fn;
   }
-
-  // _onSubmitButtonClick(evt) {
-  //   evt.preventDefault();
-  //   if (typeof this._onSubmit === `function`) {
-  //     this._onSubmit();
-  //   }
-  //   // typeof this._onSubmit === `function` && this._onSubmit();
-  // }
 
   get element() {
     return this._element;
   }
 
-  set onEdit(fn) {
-    this._onEdit = fn;
-  }
-
   get template() {
     return `
-      <article class="card card--${getRandomArrayItem(this._color)} ${this._isRepeated() ? `card--repeat` : ``} ${getRandomDate(this._dueDate) < Date.now() ? `card--deadline` : ``}">
+      <article class="card card--edit card--${getRandomArrayItem(this._color)} ${this._isRepeated() ? `card--repeat` : ``} ${getRandomDate(this._dueDate) < Date.now() ? `card--deadline` : ``}">
         <form class="card__form" method="get">
           <div class="card__inner">
             <div class="card__control">
@@ -248,14 +243,14 @@ class Task {
   }
 
   bindEvents() {
-    this._element.querySelector(`.card__btn--edit`).addEventListener(`click`, this._onEditButtonClick.bind(this));
+    this._element.querySelector(`.card__form`).addEventListener(`submit`, this._onSubmitButtonClick.bind(this));
   }
 
   unbindEvents() {
-    this._element.querySelector(`.card__btn--edit`).removeEventListener(`click`, this._onEditButtonClick.bind(this));
+    this._element.querySelector(`.card__form`).removeEventListener(`submit`, this._onSubmitButtonClick.bind(this));
   }
 
 }
 
 
-export default Task;
+export default TaskEdit;
