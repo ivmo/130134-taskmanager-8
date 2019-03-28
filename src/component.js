@@ -35,6 +35,6 @@ class Component {
   unbindEvents() {}
 
 
-};
+}
 
 export default Component;
