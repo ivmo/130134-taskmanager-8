@@ -1,18 +1,12 @@
+import {getRandomArrayItem, getRandomDate, getConvertedDate, getMonthName} from './utils.js';
+import Component from './component.js';
 import renderHashtag from './make-hashtag.js';
 import getDaysHtml from './make-day.js';
 
-const getRandomArrayItem = (array) => array[Math.floor(Math.random() * array.length)];
-const getRandomDate = (taskDate) => taskDate + 1 + Math.floor(Math.random() * 7) * 24 * 60 * 60 * 1000;
-const getConvertedDate = (dataTask) => new Date(getRandomDate(dataTask));
 
-const createElement = (template) => {
-  const newElement = document.createElement(`div`);
-  newElement.innerHTML = template;
-  return newElement.firstChild;
-};
-
-class Task {
+class Task extends Component {
   constructor(data) {
+    super();
     this._title = data.title;
     this._dueDate = data.dueDate;
     this._tags = data.tags;
@@ -20,10 +14,6 @@ class Task {
     this._repeatingDays = data.repeatingDays;
     this._color = data.color;
 
-    this._element = null;
-    this._state = {
-      isEdit: false
-    };
     this._onEdit = null;
   }
 
@@ -35,19 +25,6 @@ class Task {
     if (typeof this._onEdit === `function`) {
       this._onEdit();
     }
-    // typeof this._onEdit === `function` && this._onEdit();
-  }
-
-  // _onSubmitButtonClick(evt) {
-  //   evt.preventDefault();
-  //   if (typeof this._onSubmit === `function`) {
-  //     this._onSubmit();
-  //   }
-  //   // typeof this._onSubmit === `function` && this._onSubmit();
-  // }
-
-  get element() {
-    return this._element;
   }
 
   set onEdit(fn) {
@@ -97,14 +74,14 @@ class Task {
                     date: <span class="card__date-status">no</span>
                   </button>
 
-                  <fieldset class="card__date-deadline" disabled>
+                  <fieldset class="card__date-deadline" ${this._dueDate ? `` : `disabled`}>
                     <label class="card__input-deadline-wrap">
                       <input
                         class="card__date"
                         type="text"
                         placeholder="23 September"
                         name="date"
-                        value="${getConvertedDate(this._dueDate).getDate()}"
+                        value="${getConvertedDate(this._dueDate).getDate()} ${getMonthName(this._dueDate)}"
                       />
                     </label>
                     <label class="card__input-deadline-wrap">
@@ -236,16 +213,6 @@ class Task {
       `.trim();
   }
 
-  render() {
-    this._element = createElement(this.template);
-    this.bindEvents();
-    return this._element;
-  }
-
-  unrender() {
-    this.unbindEvents();
-    this._element = null;
-  }
 
   bindEvents() {
     this._element.querySelector(`.card__btn--edit`).addEventListener(`click`, this._onEditButtonClick.bind(this));
