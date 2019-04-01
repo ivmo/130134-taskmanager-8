@@ -1,3 +1,5 @@
+import {getRandomValue} from './utils.js';
+
 const hashtagHtml = (hashtag) => `
 <span class="card__hashtag-inner">
   <input
@@ -14,8 +16,6 @@ const hashtagHtml = (hashtag) => `
   </button>
 </span>
 `;
-
-const getRandomValue = (max, min = 0) => Math.floor(Math.random() * (max - min)) + min;
 
 
 const renderHashtag = (hashtagData) => {

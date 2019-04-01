@@ -1,3 +1,4 @@
+import {getRandomValue} from './utils.js';
 import taskData from './data.js';
 import renderFilter from './make-filter.js';
 import Task from './make-task.js';
@@ -7,7 +8,6 @@ const FILTERS = [`All`, `Overdue`, `Today`, `Favorites`, `Repeating`, `Tags`, `A
 const START_CARDS_COUNT = 7;
 const DEFAULT_ACTIVE_FILTER_INDEX = 0;
 
-const getRandomValue = (max, min = 0) => Math.floor(Math.random() * (max - min)) + min;
 
 const getFiltersHtml = (filtersData) => {
   return filtersData.map((it, i) => {

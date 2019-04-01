@@ -1,18 +1,12 @@
+import {getRandomArrayItem, getRandomDate, getConvertedDate} from './utils.js';
+import Component from './component.js';
 import renderHashtag from './make-hashtag.js';
 import getDaysHtml from './make-day.js';
 
-const getRandomArrayItem = (array) => array[Math.floor(Math.random() * array.length)];
-const getRandomDate = (taskDate) => taskDate + 1 + Math.floor(Math.random() * 7) * 24 * 60 * 60 * 1000;
-const getConvertedDate = (dataTask) => new Date(getRandomDate(dataTask));
 
-const createElement = (template) => {
-  const newElement = document.createElement(`div`);
-  newElement.innerHTML = template;
-  return newElement.firstChild;
-};
-
-class TaskEdit {
+class TaskEdit extends Component {
   constructor(data) {
+    super();
     this._title = data.title;
     this._dueDate = data.dueDate;
     this._tags = data.tags;
@@ -20,7 +14,8 @@ class TaskEdit {
     this._repeatingDays = data.repeatingDays;
     this._color = data.color;
 
-    this._element = null;
+    this._onSubmitButtonClick = this._onSubmitButtonClick.bind(this);
+
     this._onSubmit = null;
   }
 
@@ -31,12 +26,6 @@ class TaskEdit {
     }
   }
 
-  // _onEditButtonClick() {
-  //   if (typeof this._onEdit === `function`) {
-  //     this._onEdit();
-  //   }
-  // }
-
   _isRepeated() {
     return Object.values(this._repeatingDays).some((it) => it === true);
   }
@@ -45,9 +34,6 @@ class TaskEdit {
     this._onSubmit = fn;
   }
 
-  get element() {
-    return this._element;
-  }
 
   get template() {
     return `
@@ -231,16 +217,6 @@ class TaskEdit {
       `.trim();
   }
 
-  render() {
-    this._element = createElement(this.template);
-    this.bindEvents();
-    return this._element;
-  }
-
-  unrender() {
-    this.unbindEvents();
-    this._element = null;
-  }
 
   bindEvents() {
     this._element.querySelector(`.card__form`).addEventListener(`submit`, this._onSubmitButtonClick.bind(this));
