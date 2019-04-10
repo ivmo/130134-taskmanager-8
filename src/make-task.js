@@ -33,7 +33,7 @@ class Task extends Component {
 
   get template() {
     return `
-      <article class="card card--${getRandomArrayItem(this._color)} ${this._isRepeated() ? `card--repeat` : ``} ${getRandomDate(this._dueDate) < Date.now() ? `card--deadline` : ``}">
+      <article class="card card--${this._color} ${this._isRepeated() ? `card--repeat` : ``} ${this._dueDate < Date.now() ? `card--deadline` : ``}">
         <form class="card__form" method="get">
           <div class="card__inner">
             <div class="card__control">
@@ -63,7 +63,7 @@ class Task extends Component {
                   class="card__text"
                   placeholder="Start typing your text here..."
                   name="text"
-                >${getRandomArrayItem(this._title)}</textarea>
+                >${this._title}</textarea>
               </label>
             </div>
 

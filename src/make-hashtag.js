@@ -20,12 +20,9 @@ const hashtagHtml = (hashtag) => `
 
 const renderHashtag = (hashtagData) => {
   let hashtagItems = [];
-  const hashtagCount = getRandomValue(4);
-  const arrHashtags = Array.from(hashtagData);
-
-  for (let i = 0; i < hashtagCount; i++) {
-    hashtagItems.push(hashtagHtml(arrHashtags[getRandomValue(arrHashtags.length)]));
-  }
+  hashtagData.forEach((it) => {
+    hashtagItems.push(hashtagHtml(it));
+  });
   return hashtagItems.join(``);
 };
 

@@ -17,7 +17,7 @@ export const getRandomArrayItem = (array) => array[Math.floor(Math.random() * ar
 export const getRandomDate = (taskDate) => taskDate + 1 + Math.floor(Math.random() * 7) * 24 * 60 * 60 * 1000;
 
 
-export const getConvertedDate = (dataTask) => new Date(getRandomDate(dataTask));
+export const getConvertedDate = (dataTask) => new Date(dataTask);
 
 export const getMonthName = (dataTask) => MONTH_NAMES[getConvertedDate(dataTask).getMonth()];
 

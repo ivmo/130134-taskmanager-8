@@ -14,9 +14,7 @@ const renderDay = (repeatInfo, day) => `
 
 const getDaysHtml = (daysInfo) => {
   const daysArray = Object.keys(daysInfo);
-  return daysArray.map((it) => {
-    return renderDay(daysInfo[it], it);
-  }).join(``);
+  return daysArray.map((it) => renderDay(daysInfo[it], it)).join(``);
 };
 
 export default getDaysHtml;

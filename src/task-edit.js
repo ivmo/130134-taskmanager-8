@@ -1,4 +1,4 @@
-import {getRandomArrayItem, getRandomDate, getConvertedDate} from './utils.js';
+import {getRandomArrayItem, getRandomDate, getConvertedDate, getMonthName} from './utils.js';
 import Component from './component.js';
 import renderHashtag from './make-hashtag.js';
 import getDaysHtml from './make-day.js';
@@ -37,7 +37,7 @@ class TaskEdit extends Component {
 
   get template() {
     return `
-      <article class="card card--edit card--${getRandomArrayItem(this._color)} ${this._isRepeated() ? `card--repeat` : ``} ${getRandomDate(this._dueDate) < Date.now() ? `card--deadline` : ``}">
+      <article class="card card--edit card--${this._color} ${this._isRepeated() ? `card--repeat` : ``} ${this._dueDate < Date.now() ? `card--deadline` : ``}">
         <form class="card__form" method="get">
           <div class="card__inner">
             <div class="card__control">
@@ -67,7 +67,7 @@ class TaskEdit extends Component {
                   class="card__text"
                   placeholder="Start typing your text here..."
                   name="text"
-                >${getRandomArrayItem(this._title)}</textarea>
+                >${this._title}</textarea>
               </label>
             </div>
 
@@ -78,14 +78,14 @@ class TaskEdit extends Component {
                     date: <span class="card__date-status">no</span>
                   </button>
 
-                  <fieldset class="card__date-deadline" disabled>
+                  <fieldset class="card__date-deadline" ${this._dueDate ? `` : `disabled`}>
                     <label class="card__input-deadline-wrap">
                       <input
                         class="card__date"
                         type="text"
                         placeholder="23 September"
                         name="date"
-                        value="${getConvertedDate(this._dueDate).getDate()}"
+                        value="${getConvertedDate(this._dueDate).getDate()} ${getMonthName(this._dueDate)}"
                       />
                     </label>
                     <label class="card__input-deadline-wrap">

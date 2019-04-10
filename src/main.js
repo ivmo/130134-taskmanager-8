@@ -1,4 +1,4 @@
-import {getRandomValue} from './utils.js';
+import {getRandomArrayItem, getRandomValue, getRandomDate, getConvertedDate, getMonthName} from './utils.js';
 import taskData from './data.js';
 import renderFilter from './make-filter.js';
 import Task from './make-task.js';
@@ -18,9 +18,36 @@ const getFiltersHtml = (filtersData) => {
 const filterListElement = document.querySelector(`.main__filter`);
 filterListElement.innerHTML = getFiltersHtml(FILTERS);
 
-let tasksDataArray;
+
+const getHashtags = (hashtagData) => {
+  let hashtagItems = [];
+  const hashtagCount = getRandomValue(4);
+  const arrHashtags = Array.from(hashtagData);
+
+  for (let i = 0; i < hashtagCount; i++) {
+    hashtagItems.push(arrHashtags[getRandomValue(arrHashtags.length)]);
+  }
+  return hashtagItems;
+};
+
+const newItem = (dataItem) => {
+  const item = new Object();
+  item.title = getRandomArrayItem(dataItem.title);
+  item.dueDate = getRandomDate(dataItem.dueDate);
+  item.tags = getHashtags(dataItem.tags);
+  item.color = getRandomArrayItem(dataItem.color);
+  item.picture = dataItem.picture;
+  item.repeatingDays = dataItem.repeatingDays;
+  item.isFavorite = false;
+  item.isDone = false;
+  return item;
+};
+
+let tasksDataArray = [];
 const getArrayTasks = (taskItem, tasksCount) => {
-  tasksDataArray = new Array(tasksCount).fill(taskItem);
+  for (let i = 0; i <= tasksCount; i++) {
+    tasksDataArray.push(newItem(taskItem));
+  }
   return tasksDataArray;
 };
 
