@@ -43,15 +43,15 @@ const newItem = (dataItem) => {
   return item;
 };
 
-let tasksDataArray = [];
+
 const getArrayTasks = (taskItem, tasksCount) => {
+  const tasksDataArray = [];
   for (let i = 0; i <= tasksCount; i++) {
     tasksDataArray.push(newItem(taskItem));
   }
   return tasksDataArray;
 };
 
-getArrayTasks(taskData, START_CARDS_COUNT);
 
 
 const tasksContainer = document.querySelector(`.board__tasks`);
@@ -78,7 +78,8 @@ const getTask = (taskDataItem) => {
 };
 
 
-const makeTasks = (arrayTaskData) => {
+const makeTasks = (arrayTasks, cardsCount) => {
+  const arrayTaskData = arrayTasks(taskData, cardsCount);
   tasksContainer.innerHTML = ``;
   const fragment = document.createDocumentFragment();
   arrayTaskData.forEach((it) => {
@@ -87,13 +88,12 @@ const makeTasks = (arrayTaskData) => {
   tasksContainer.appendChild(fragment);
 };
 
-makeTasks(tasksDataArray);
+makeTasks(getArrayTasks, START_CARDS_COUNT);
 
 
 const filterClickHandler = function (evt) {
   if (evt.target.classList.contains(`filter__label`)) {
-    getArrayTasks(taskData, getRandomValue(1, 10));
-    makeTasks(tasksDataArray);
+    makeTasks(getArrayTasks, getRandomValue(1, 10));
   }
 };
 
