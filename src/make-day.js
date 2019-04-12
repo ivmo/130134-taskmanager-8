@@ -5,7 +5,7 @@ const renderDay = (repeatInfo, day) => `
   id="repeat-${day}-5"
   name="repeat"
   value="${day}"
-  ${repeatInfo ? `checked` : ``}
+  ${repeatInfo && `checked`}
 />
 <label class="card__repeat-day" for="repeat-${day}-5"
   >${day}</label

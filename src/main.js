@@ -61,18 +61,24 @@ const getTask = (taskDataItem) => {
   const taskComponent = new Task(taskDataItem);
   const editTaskComponent = new TaskEdit(taskDataItem);
 
-
   taskComponent.onEdit = () => {
     editTaskComponent.render();
     tasksContainer.replaceChild(editTaskComponent.element, taskComponent.element);
     taskComponent.unrender();
   };
 
-  editTaskComponent.onSubmit = () => {
-    taskComponent.render();
-    tasksContainer.replaceChild(taskComponent.element, editTaskComponent.element);
-    editTaskComponent.unrender();
-  };
+  editTaskComponent.onSubmit = (newObject) => {
+  taskData.title = newObject.title;
+  taskData.tags = newObject.tags;
+  taskData.color = newObject.color;
+  taskData.repeatingDays = newObject.repeatingDays;
+  taskData.dueDate = newObject.dueDate;
+
+  taskComponent.update(task);
+  taskComponent.render();
+  tasksContainer.replaceChild(taskComponent.element, editTaskComponent.element);
+  editTaskComponent.unrender();
+}
 
   return taskComponent.render();
 };

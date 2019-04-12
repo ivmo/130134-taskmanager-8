@@ -5,7 +5,7 @@ const hashtagHtml = (hashtag) => `
   <input
     type="hidden"
     name="hashtag"
-    value="repeat"
+    value="${hashtag}"
     class="card__hashtag-hidden-input"
   />
   <button type="button" class="card__hashtag-name">
@@ -18,12 +18,6 @@ const hashtagHtml = (hashtag) => `
 `;
 
 
-const renderHashtag = (hashtagData) => {
-  let hashtagItems = [];
-  hashtagData.forEach((it) => {
-    hashtagItems.push(hashtagHtml(it));
-  });
-  return hashtagItems.join(``);
-};
+const renderHashtag = (hashtagData) => (Array.from(hashtagData).map((tag) => hashtagHtml(tag))).join('');
 
 export default renderHashtag;

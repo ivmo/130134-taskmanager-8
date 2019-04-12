@@ -96,10 +96,10 @@ class Task extends Component {
                   </fieldset>
 
                   <button class="card__repeat-toggle" type="button">
-                    repeat:<span class="card__repeat-status">no</span>
+                    repeat:<span class="card__repeat-status">${this._state.isRepeated ? `yes` : `no`}</span>
                   </button>
 
-                  <fieldset class="card__repeat-days" disabled>
+                  <fieldset class="card__repeat-days" ${!this._state.isRepeated && `disabled`}>
                     <div class="card__repeat-days-inner">
                       ${getDaysHtml(this._repeatingDays)}
                     </div>
@@ -144,6 +144,7 @@ class Task extends Component {
                     class="card__color-input card__color-input--black visually-hidden"
                     name="color"
                     value="black"
+                    ${this._color === `black` && 'checked'}
                   />
                   <label
                     for="color-black-5"
@@ -156,6 +157,7 @@ class Task extends Component {
                     class="card__color-input card__color-input--yellow visually-hidden"
                     name="color"
                     value="yellow"
+                    ${this._color === `yellow` && 'checked'}
                   />
                   <label
                     for="color-yellow-5"
@@ -168,6 +170,7 @@ class Task extends Component {
                     class="card__color-input card__color-input--blue visually-hidden"
                     name="color"
                     value="blue"
+                    ${this._color === `blue` && 'checked'}
                   />
                   <label
                     for="color-blue-5"
@@ -180,7 +183,7 @@ class Task extends Component {
                     class="card__color-input card__color-input--green visually-hidden"
                     name="color"
                     value="green"
-                    checked
+                    ${this._color === `green` && 'checked'}
                   />
                   <label
                     for="color-green-5"
@@ -193,6 +196,7 @@ class Task extends Component {
                     class="card__color-input card__color-input--pink visually-hidden"
                     name="color"
                     value="pink"
+                    ${this._color === `pink` && 'checked'}
                   />
                   <label
                     for="color-pink-5"
@@ -220,6 +224,13 @@ class Task extends Component {
 
   unbindEvents() {
     this._element.querySelector(`.card__btn--edit`).removeEventListener(`click`, this._onEditButtonClick.bind(this));
+  }
+
+  update(data) {
+      this._title = data.title;
+      this._tags = data.tags;
+      this._color = data.color;
+      this._repeatingDays = data.repeatingDays;
   }
 
 }
