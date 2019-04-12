@@ -14,6 +14,7 @@ class TaskEdit extends Component {
     this._picture = data.picture;
     this._repeatingDays = data.repeatingDays;
     this._color = data.color;
+    this._colorId = data.colorId;
 
     this._onSubmitButtonClick = this._onSubmitButtonClick.bind(this);
     this._onSubmit = null;
@@ -189,66 +190,66 @@ class TaskEdit extends Component {
                 <div class="card__colors-wrap">
                   <input
                     type="radio"
-                    id="color-black-5"
+                    id="color-black-${this._colorId}"
                     class="card__color-input card__color-input--black visually-hidden"
                     name="color"
                     value="black"
                     ${this._color === `black` && 'checked'}
                   />
                   <label
-                    for="color-black-5"
+                    for="color-black-${this._colorId}"
                     class="card__color card__color--black"
                     >black</label
                   >
                   <input
                     type="radio"
-                    id="color-yellow-5"
+                    id="color-yellow-${this._colorId}"
                     class="card__color-input card__color-input--yellow visually-hidden"
                     name="color"
                     value="yellow"
                     ${this._color === `yellow` && 'checked'}
                   />
                   <label
-                    for="color-yellow-5"
+                    for="color-yellow-${this._colorId}"
                     class="card__color card__color--yellow"
                     >yellow</label
                   >
                   <input
                     type="radio"
-                    id="color-blue-5"
+                    id="color-blue-${this._colorId}"
                     class="card__color-input card__color-input--blue visually-hidden"
                     name="color"
                     value="blue"
                     ${this._color === `blue` && 'checked'}
                   />
                   <label
-                    for="color-blue-5"
+                    for="color-blue-${this._colorId}"
                     class="card__color card__color--blue"
                     >blue</label
                   >
                   <input
                     type="radio"
-                    id="color-green-5"
+                    id="color-green-${this._colorId}"
                     class="card__color-input card__color-input--green visually-hidden"
                     name="color"
                     value="green"
                     ${this._color === `green` && 'checked'}
                   />
                   <label
-                    for="color-green-5"
+                    for="color-green-${this._colorId}"
                     class="card__color card__color--green"
                     >green</label
                   >
                   <input
                     type="radio"
-                    id="color-pink-5"
+                    id="color-pink-${this._colorId}"
                     class="card__color-input card__color-input--pink visually-hidden"
                     name="color"
                     value="pink"
                     ${this._color === `pink` && 'checked'}
                   />
                   <label
-                    for="color-pink-5"
+                    for="color-pink-${this._colorId}"
                     class="card__color card__color--pink"
                     >pink</label
                   >

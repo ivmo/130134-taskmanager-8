@@ -30,7 +30,7 @@ const getHashtags = (hashtagData) => {
   return hashtagItems;
 };
 
-const newItem = (dataItem) => {
+const newItem = (dataItem, colorId) => {
   const item = new Object();
   item.title = getRandomArrayItem(dataItem.title);
   item.dueDate = getRandomDate(dataItem.dueDate);
@@ -40,6 +40,7 @@ const newItem = (dataItem) => {
   item.repeatingDays = dataItem.repeatingDays;
   item.isFavorite = false;
   item.isDone = false;
+  item.colorId = colorId;
   return item;
 };
 
@@ -47,7 +48,7 @@ const newItem = (dataItem) => {
 const getArrayTasks = (taskItem, tasksCount) => {
   const tasksDataArray = [];
   for (let i = 0; i <= tasksCount; i++) {
-    tasksDataArray.push(newItem(taskItem));
+    tasksDataArray.push(newItem(taskItem, i));
   }
   return tasksDataArray;
 };
