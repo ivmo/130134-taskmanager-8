@@ -129,6 +129,7 @@ class Task extends Component {
       this._tags = data.tags;
       this._color = data.color;
       this._repeatingDays = data.repeatingDays;
+      this._dueDate = data.dueDate;
   }
 
 }
