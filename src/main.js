@@ -75,7 +75,7 @@ const getTask = (taskDataItem) => {
   taskData.repeatingDays = newObject.repeatingDays;
   taskData.dueDate = newObject.dueDate;
 
-  taskComponent.update(task);
+  taskComponent.update(taskData);
   taskComponent.render();
   tasksContainer.replaceChild(taskComponent.element, editTaskComponent.element);
   editTaskComponent.unrender();

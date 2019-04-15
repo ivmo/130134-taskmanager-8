@@ -1,4 +1,5 @@
 import flatpickr from "../node_modules/flatpickr";
+import moment from "../node_modules/moment";
 import {getRandomArrayItem, getRandomDate, getConvertedDate, getMonthName} from './utils.js';
 import Component from './component.js';
 import renderHashtag from './make-hashtag.js';
@@ -42,6 +43,15 @@ class TaskEdit extends Component {
         'su': false,
       }
     };
+
+    const taskEditMapper = TaskEdit.createMapper(entry);
+
+    for (const pair of formData.entries()) {
+      const [property, value] = pair;
+      taskEditMapper[property] && taskEditMapper[property](value);
+    }
+
+    return entry;
   }
 
   _onSubmitButtonClick(evt) {
@@ -131,7 +141,7 @@ class TaskEdit extends Component {
                         type="text"
                         placeholder="23 September"
                         name="date"
-                        value="${getConvertedDate(this._dueDate).getDate()} ${getMonthName(this._dueDate)}"
+                        value="${moment(getConvertedDate(this._dueDate)).format('D MMMM')}"
                       />
                     </label>
                     <label class="card__input-deadline-wrap">
@@ -140,7 +150,7 @@ class TaskEdit extends Component {
                         type="text"
                         placeholder="11:15 PM"
                         name="time"
-                        value="${getConvertedDate(this._dueDate).getHours()}:${getConvertedDate(this._dueDate).getMinutes()}"
+                        value="${moment(getConvertedDate(this._dueDate)).format('LT')}"
                       />
                     </label>
                   </fieldset>
@@ -270,19 +280,19 @@ class TaskEdit extends Component {
 
   bindEvents() {
     this._element.querySelector(`.card__form`).addEventListener(`submit`, this._onSubmitButtonClick.bind(this));
-    this._element.querySelector(`.card__date-deadline-toggle`).addEventListener(`click`, this._onChangeDate);
-    this._element.querySelector(`.card__repeat-toggle`).addEventListener(`click`, this._onChangeRepeated);
+    this._element.querySelector(`.card__date-deadline-toggle`).addEventListener(`click`, this._onChangeDate.bind(this));
+    this._element.querySelector(`.card__repeat-toggle`).addEventListener(`click`, this._onChangeRepeated.bind(this));
 
     if (this._state.isDate) {
-     flatpickr(".card__date", { altInput: true, altFormat: "j F", dateFormat: "j F" });
-     flatpickr(".card__time", { enableTime: true, noCalendar: true, altInput: true, altFormat: "h:i K", dateFormat: "h:i K"});
+     flatpickr(this._element.querySelector(`.card__date`), { altInput: true, altFormat: "j F", dateFormat: "j F" });
+     flatpickr(this._element.querySelector(`.card__time`), { enableTime: true, noCalendar: true, altInput: true, altFormat: "h:i K", dateFormat: "h:i K"});
    }
   }
 
   unbindEvents() {
     this._element.querySelector(`.card__form`).removeEventListener(`submit`, this._onSubmitButtonClick.bind(this));
-    this._element.querySelector(`.card__date-deadline-toggle`).removeEventListener(`click`, this._onChangeDate);
-    this._element.querySelector(`.card__repeat-toggle`).removeEventListener(`click`, this._onChangeRepeated);
+    this._element.querySelector(`.card__date-deadline-toggle`).removeEventListener(`click`, this._onChangeDate.bind(this));
+    this._element.querySelector(`.card__repeat-toggle`).removeEventListener(`click`, this._onChangeRepeated.bind(this));
   }
 
   update(data) {
