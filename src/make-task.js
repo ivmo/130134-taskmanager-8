@@ -1,5 +1,5 @@
 import moment from "../node_modules/moment";
-import {getRandomArrayItem, getRandomDate, getConvertedDate, getMonthName} from './utils.js';
+import getConvertedDate from './utils.js';
 import Component from './component.js';
 import renderHashtag from './make-hashtag.js';
 import getDaysHtml from './make-day.js';
@@ -69,7 +69,7 @@ class Task extends Component {
                         type="text"
                         placeholder="23 September"
                         name="date"
-                        value="${moment(getConvertedDate(this._dueDate)).format('D MMMM')}"
+                        value="${moment(getConvertedDate(this._dueDate)).format(`D MMMM`)}"
                       />
                     </label>
                     <label class="card__input-deadline-wrap">
@@ -78,7 +78,7 @@ class Task extends Component {
                         type="text"
                         placeholder="11:15 PM"
                         name="time"
-                        value="${moment(getConvertedDate(this._dueDate)).format('LT')}"
+                        value="${moment(getConvertedDate(this._dueDate)).format(`LT`)}"
                       />
                     </label>
                   </fieldset>
@@ -125,11 +125,11 @@ class Task extends Component {
   }
 
   update(data) {
-      this._title = data.title;
-      this._tags = data.tags;
-      this._color = data.color;
-      this._repeatingDays = data.repeatingDays;
-      this._dueDate = data.dueDate;
+    this._title = data.title;
+    this._tags = data.tags;
+    this._color = data.color;
+    this._repeatingDays = data.repeatingDays;
+    this._dueDate = data.dueDate;
   }
 
 }

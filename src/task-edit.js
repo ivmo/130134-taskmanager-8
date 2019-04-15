@@ -1,6 +1,6 @@
 import flatpickr from "../node_modules/flatpickr";
 import moment from "../node_modules/moment";
-import {getRandomArrayItem, getRandomDate, getConvertedDate, getMonthName} from './utils.js';
+import getConvertedDate from './utils.js';
 import Component from './component.js';
 import renderHashtag from './make-hashtag.js';
 import getDaysHtml from './make-day.js';
@@ -141,7 +141,7 @@ class TaskEdit extends Component {
                         type="text"
                         placeholder="23 September"
                         name="date"
-                        value="${moment(getConvertedDate(this._dueDate)).format('D MMMM')}"
+                        value="${moment(getConvertedDate(this._dueDate)).format(`D MMMM`)}"
                       />
                     </label>
                     <label class="card__input-deadline-wrap">
@@ -150,7 +150,7 @@ class TaskEdit extends Component {
                         type="text"
                         placeholder="11:15 PM"
                         name="time"
-                        value="${moment(getConvertedDate(this._dueDate)).format('LT')}"
+                        value="${moment(getConvertedDate(this._dueDate)).format(`LT`)}"
                       />
                     </label>
                   </fieldset>
@@ -204,7 +204,7 @@ class TaskEdit extends Component {
                     class="card__color-input card__color-input--black visually-hidden"
                     name="color"
                     value="black"
-                    ${this._color === `black` && 'checked'}
+                    ${this._color === `black` && `checked`}
                   />
                   <label
                     for="color-black-${this._colorId}"
@@ -217,7 +217,7 @@ class TaskEdit extends Component {
                     class="card__color-input card__color-input--yellow visually-hidden"
                     name="color"
                     value="yellow"
-                    ${this._color === `yellow` && 'checked'}
+                    ${this._color === `yellow` && `checked`}
                   />
                   <label
                     for="color-yellow-${this._colorId}"
@@ -230,7 +230,7 @@ class TaskEdit extends Component {
                     class="card__color-input card__color-input--blue visually-hidden"
                     name="color"
                     value="blue"
-                    ${this._color === `blue` && 'checked'}
+                    ${this._color === `blue` && `checked`}
                   />
                   <label
                     for="color-blue-${this._colorId}"
@@ -243,7 +243,7 @@ class TaskEdit extends Component {
                     class="card__color-input card__color-input--green visually-hidden"
                     name="color"
                     value="green"
-                    ${this._color === `green` && 'checked'}
+                    ${this._color === `green` && `checked`}
                   />
                   <label
                     for="color-green-${this._colorId}"
@@ -256,7 +256,7 @@ class TaskEdit extends Component {
                     class="card__color-input card__color-input--pink visually-hidden"
                     name="color"
                     value="pink"
-                    ${this._color === `pink` && 'checked'}
+                    ${this._color === `pink` && `checked`}
                   />
                   <label
                     for="color-pink-${this._colorId}"
@@ -284,9 +284,9 @@ class TaskEdit extends Component {
     this._element.querySelector(`.card__repeat-toggle`).addEventListener(`click`, this._onChangeRepeated.bind(this));
 
     if (this._state.isDate) {
-     flatpickr(this._element.querySelector(`.card__date`), { altInput: true, altFormat: "j F", dateFormat: "j F" });
-     flatpickr(this._element.querySelector(`.card__time`), { enableTime: true, noCalendar: true, altInput: true, altFormat: "h:i K", dateFormat: "h:i K"});
-   }
+      flatpickr(this._element.querySelector(`.card__date`), {altInput: true, altFormat: `j F`, dateFormat: `j F`});
+      flatpickr(this._element.querySelector(`.card__time`), {enableTime: true, noCalendar: true, altInput: true, altFormat: `h:i K`, dateFormat: `h:i K`});
+    }
   }
 
   unbindEvents() {
@@ -296,11 +296,11 @@ class TaskEdit extends Component {
   }
 
   update(data) {
-      this._title = data.title;
-      this._tags = data.tags;
-      this._color = data.color;
-      this._repeatingDays = data.repeatingDays;
-      this._dueDate = data.dueDate;
+    this._title = data.title;
+    this._tags = data.tags;
+    this._color = data.color;
+    this._repeatingDays = data.repeatingDays;
+    this._dueDate = data.dueDate;
   }
 
   static createMapper(target) {
@@ -310,7 +310,7 @@ class TaskEdit extends Component {
       color: (value) => target.color = value,
       repeat: (value) => target.repeatingDays[value] = true,
       date: (value) => target.dueDate = value,
-    }
+    };
   }
 
 }

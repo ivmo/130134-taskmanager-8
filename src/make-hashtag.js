@@ -1,5 +1,3 @@
-import {getRandomValue} from './utils.js';
-
 const hashtagHtml = (hashtag) => `
 <span class="card__hashtag-inner">
   <input
@@ -18,6 +16,6 @@ const hashtagHtml = (hashtag) => `
 `;
 
 
-const renderHashtag = (hashtagData) => (Array.from(hashtagData).map((tag) => hashtagHtml(tag))).join('');
+const renderHashtag = (hashtagData) => (Array.from(hashtagData).map((tag) => hashtagHtml(tag))).join(``);
 
 export default renderHashtag;

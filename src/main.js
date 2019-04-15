@@ -1,4 +1,4 @@
-import {getRandomArrayItem, getRandomValue, getRandomDate, getConvertedDate, getMonthName} from './utils.js';
+import {getRandomArrayItem, getRandomValue, getRandomDate} from './utils.js';
 import taskData from './data.js';
 import renderFilter from './make-filter.js';
 import Task from './make-task.js';
@@ -30,17 +30,19 @@ const getHashtags = (hashtagData) => {
   return hashtagItems;
 };
 
-const newItem = (dataItem, colorId) => {
-  const item = new Object();
-  item.title = getRandomArrayItem(dataItem.title);
-  item.dueDate = getRandomDate(dataItem.dueDate);
-  item.tags = getHashtags(dataItem.tags);
-  item.color = getRandomArrayItem(dataItem.color);
-  item.picture = dataItem.picture;
-  item.repeatingDays = dataItem.repeatingDays;
-  item.isFavorite = false;
-  item.isDone = false;
-  item.colorId = colorId;
+const newItem = (dataItem, idColor) => {
+  const item = {
+    title: getRandomArrayItem(dataItem.title),
+    dueDate: getRandomDate(dataItem.dueDate),
+    tags: getHashtags(dataItem.tags),
+    color: getRandomArrayItem(dataItem.color),
+    picture: dataItem.picture,
+    repeatingDays: dataItem.repeatingDays,
+    isFavorite: false,
+    isDone: false,
+    colorId: idColor,
+  };
+
   return item;
 };
 
@@ -52,7 +54,6 @@ const getArrayTasks = (taskItem, tasksCount) => {
   }
   return tasksDataArray;
 };
-
 
 
 const tasksContainer = document.querySelector(`.board__tasks`);
@@ -69,17 +70,17 @@ const getTask = (taskDataItem) => {
   };
 
   editTaskComponent.onSubmit = (newObject) => {
-  taskData.title = newObject.title;
-  taskData.tags = newObject.tags;
-  taskData.color = newObject.color;
-  taskData.repeatingDays = newObject.repeatingDays;
-  taskData.dueDate = newObject.dueDate;
+    taskData.title = newObject.title;
+    taskData.tags = newObject.tags;
+    taskData.color = newObject.color;
+    taskData.repeatingDays = newObject.repeatingDays;
+    taskData.dueDate = newObject.dueDate;
 
-  taskComponent.update(taskData);
-  taskComponent.render();
-  tasksContainer.replaceChild(taskComponent.element, editTaskComponent.element);
-  editTaskComponent.unrender();
-}
+    taskComponent.update(taskData);
+    taskComponent.render();
+    tasksContainer.replaceChild(taskComponent.element, editTaskComponent.element);
+    editTaskComponent.unrender();
+  };
 
   return taskComponent.render();
 };
