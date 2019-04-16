@@ -1,6 +1,6 @@
 import flatpickr from "../node_modules/flatpickr";
 import moment from "../node_modules/moment";
-import getConvertedDate from './utils.js';
+import {getConvertedDate} from './utils.js';
 import Component from './component.js';
 import renderHashtag from './make-hashtag.js';
 import getDaysHtml from './make-day.js';
